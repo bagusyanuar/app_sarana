@@ -1,4 +1,5 @@
 import 'package:app_sarana/views/karyawan/dashboard.dart';
+import 'package:app_sarana/views/karyawan/detail-ruangan.dart';
 import 'package:app_sarana/views/login.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +31,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        "/": (context) => const SplashScreen(),
+        "/": (context) => const DashboardKaryawan(),
+        // "/": (context) => const SplashScreen(),
         "/login": (context) => const LoginPage(),
         "/dashboard-karyawan": (context) => const DashboardKaryawan(),
+        "/detail-ruangan": (context) => const DetailRuangan(),
         // "/dashboard": (context) => const Dashboard(),
         // "/qr": (context) => const QRpage(),
         // "/riwayat": (context) => const Riwayat(),

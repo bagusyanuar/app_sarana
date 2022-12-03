@@ -1,3 +1,7 @@
+import 'package:app_sarana/components/base-card.dart';
+import 'package:app_sarana/components/base-loader.dart';
+import 'package:app_sarana/components/room-card.dart';
+import 'package:app_sarana/dummy/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -11,26 +15,74 @@ class DashboardKaryawan extends StatefulWidget {
 }
 
 class _DashboardKaryawanState extends State<DashboardKaryawan> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      appBar: AppBar(
-        title: const Text("Dashboard"),
-      ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: Column(),
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              child: TextField(
+                onChanged: (text) {},
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                    prefixIcon: const Icon(Icons.search),
+                    hintText: "Cari Ruangan / Lokasi..."),
+              ),
+            ),
+            Expanded(
+              child: isLoading
+                  ? const BaseLoader()
+                  : RefreshIndicator(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: GridView(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10),
+                          children: DataDummy.DummyProperties.map(
+                            (e) => RoomCard(
+                              name: e['name'].toString(),
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed('/detail-ruangan');
+                              },
+                            ),
+                          ).toList(),
+                        ),
+                      ),
+                      onRefresh: () {
+                        return _refresh();
+                      },
+                    ),
+            ),
+            const SizedBox(
+              height: 20,
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           const BottomNavigationBarItem(
               icon: Icon(Icons.home), label: "Dashboard"),
           const BottomNavigationBarItem(
-              icon: Icon(Icons.outbox_rounded), label: "Transaksi Sarana"),
+              icon: Icon(Icons.outbox_rounded), label: "Sarana Keluar"),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.move_to_inbox), label: "Sarana Masuk"),
         ],
       ),
-    ));
+    );
   }
+
+  _refresh() async {}
 }
