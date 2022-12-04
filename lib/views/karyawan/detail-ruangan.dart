@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:app_sarana/dummy/data.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 class DetailRuangan extends StatefulWidget {
@@ -8,6 +12,10 @@ class DetailRuangan extends StatefulWidget {
 }
 
 class _DetailRuanganState extends State<DetailRuangan> {
+  int? selectedValue;
+  final TextEditingController textEditSaranaController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +55,9 @@ class _DetailRuanganState extends State<DetailRuangan> {
                   padding:
                       const EdgeInsets.only(top: 20, bottom: 20, right: 20),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed("/add-sarana");
+                    },
                     child: Container(
                       height: 50,
                       width: 50,
@@ -63,7 +73,7 @@ class _DetailRuanganState extends State<DetailRuangan> {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ],
