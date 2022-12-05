@@ -72,14 +72,23 @@ class _DashboardKaryawanState extends State<DashboardKaryawan> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
-          const BottomNavigationBarItem(
-              icon: Icon(Icons.home), label: "Dashboard"),
-          const BottomNavigationBarItem(
+        onTap: ((value) {
+          if (value == 1) {
+            Navigator.of(context).pushNamed("/sarana-out");
+          }
+
+          if (value == 2) {
+            Navigator.of(context).pushNamed("/sarana-in");
+          }
+        }),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
+          BottomNavigationBarItem(
               icon: Icon(Icons.outbox_rounded), label: "Sarana Keluar"),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
               icon: Icon(Icons.move_to_inbox), label: "Sarana Masuk"),
         ],
+        currentIndex: 0,
       ),
     );
   }

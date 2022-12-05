@@ -4,6 +4,8 @@ import 'package:app_sarana/dummy/data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/base-loader.dart';
+
 class DetailRuangan extends StatefulWidget {
   const DetailRuangan({Key? key}) : super(key: key);
 
@@ -12,10 +14,7 @@ class DetailRuangan extends StatefulWidget {
 }
 
 class _DetailRuanganState extends State<DetailRuangan> {
-  int? selectedValue;
-  final TextEditingController textEditSaranaController =
-      TextEditingController();
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +75,66 @@ class _DetailRuanganState extends State<DetailRuangan> {
                 ),
               ],
             ),
+            Expanded(
+              child: isLoading
+                  ? const BaseLoader()
+                  : RefreshIndicator(
+                      onRefresh: () {
+                        return _refresh();
+                      },
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: DataDummy.DummySaranaRoom.map(
+                              (e) => Container(
+                                height: 50,
+                                margin: const EdgeInsets.only(bottom: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color: Colors.black54.withOpacity(0.2),
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        e['name'],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      e['qty'].toString(),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+            ),
           ],
         ),
       ),
     );
   }
+
+  _refresh() async {}
 }
