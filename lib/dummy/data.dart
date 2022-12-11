@@ -65,4 +65,16 @@ class DataDummy {
     {"id": 10, "name": "Ruangan 10"},
     {"id": 11, "name": "Ruangan 11"},
   ];
+
+  static List<Map<String, dynamic>> DummySaranaOut = [
+    {"id": 1, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+    {"id": 2, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+    {"id": 3, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+    {"id": 4, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+    {"id": 5, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+    {"id": 6, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+    {"id": 7, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+    {"id": 8, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+    {"id": 9, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+  ];
 }
