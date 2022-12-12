@@ -25,6 +25,32 @@ class _DashboardKaryawanState extends State<DashboardKaryawan> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        "Bambang",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      Text("Admin")
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const Icon(Icons.logout),
+                  )
+                ],
+              ),
+            ),
+            Container(
               padding: const EdgeInsets.all(20),
               child: TextField(
                 onChanged: (text) {},

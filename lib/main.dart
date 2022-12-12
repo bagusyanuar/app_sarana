@@ -5,6 +5,8 @@ import 'package:app_sarana/views/karyawan/history.dart';
 import 'package:app_sarana/views/karyawan/sarana-in.dart';
 import 'package:app_sarana/views/karyawan/sarana-out.dart';
 import 'package:app_sarana/views/login.dart';
+import 'package:app_sarana/views/mahasiswa/dashboard.dart';
+import 'package:app_sarana/views/mahasiswa/history.dart';
 import 'package:flutter/material.dart';
 
 import 'views/splash.dart';
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        "/": (context) => const DashboardKaryawan(),
+        "/": (context) => const DashboardMahasiswa(),
         // "/": (context) => const SplashScreen(),
         "/login": (context) => const LoginPage(),
         "/dashboard-karyawan": (context) => const DashboardKaryawan(),
@@ -44,7 +46,10 @@ class MyApp extends StatelessWidget {
         "/sarana-in": (context) => const SaranaIn(),
         "/sarana-out": (context) => const SaranaOut(),
         "/sarana-riwayat": (context) => const HistorySarana(),
-        // "/dashboard": (context) => const Dashboard(),
+
+        //mahasiswa
+        "/dashboard-mahasiswa": (context) => const DashboardMahasiswa(),
+        "/keluhan-riwayat": (context) => const HistoryKeluhan(),
         // "/qr": (context) => const QRpage(),
         // "/riwayat": (context) => const Riwayat(),
         // "/search": (context) => SearchView(),

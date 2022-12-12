@@ -6,27 +6,27 @@ class DataDummy {
     },
     {
       "id": 1,
-      "name": "Ruangan 1",
+      "name": "Ruangan 2",
     },
     {
       "id": 1,
-      "name": "Ruangan 1",
+      "name": "Ruangan 3",
     },
     {
       "id": 1,
-      "name": "Ruangan 1",
+      "name": "Ruangan 4",
     },
     {
       "id": 1,
-      "name": "Ruangan 1",
+      "name": "Ruangan 5",
     },
     {
       "id": 1,
-      "name": "Ruangan 1",
+      "name": "Ruangan 6",
     },
     {
       "id": 1,
-      "name": "Ruangan 1",
+      "name": "Ruangan 7",
     },
   ];
 
@@ -76,5 +76,36 @@ class DataDummy {
     {"id": 7, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
     {"id": 8, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
     {"id": 9, "tanggal": "2022-12-10", "name": "Sarana 1", "qty": 4},
+  ];
+
+  static List<Map<String, dynamic>> DummyKeluhan = [
+    {
+      "id": 1,
+      "tanggal": "2022-12-10",
+      "deskripsi":
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
+      "status": 0
+    },
+    {
+      "id": 2,
+      "tanggal": "2022-12-10",
+      "deskripsi":
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
+      "status": 9
+    },
+    {
+      "id": 3,
+      "tanggal": "2022-12-10",
+      "deskripsi":
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
+      "status": 9
+    },
+    {
+      "id": 4,
+      "tanggal": "2022-12-10",
+      "deskripsi":
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries",
+      "status": 6
+    },
   ];
 }
