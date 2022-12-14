@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:app_sarana/components/base-card.dart';
 import 'package:app_sarana/components/base-loader.dart';
 import 'package:app_sarana/components/room-card.dart';
+import 'package:app_sarana/controller/ruangan.dart';
 import 'package:app_sarana/dummy/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +18,28 @@ class DashboardKaryawan extends StatefulWidget {
 }
 
 class _DashboardKaryawanState extends State<DashboardKaryawan> {
-  bool isLoading = false;
+  bool isLoading = true;
+  List<dynamic> _dataRuangan = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getListRuangan();
+  }
+
+  void getListRuangan() async {
+    setState(() {
+      isLoading = true;
+    });
+    List<dynamic> list = await getListRuanganHandler();
+    setState(() {
+      isLoading = false;
+      _dataRuangan = list;
+    });
+    log(list.toString());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,15 +99,17 @@ class _DashboardKaryawanState extends State<DashboardKaryawan> {
                                   crossAxisCount: 2,
                                   mainAxisSpacing: 10,
                                   crossAxisSpacing: 10),
-                          children: DataDummy.DummyProperties.map(
-                            (e) => RoomCard(
-                              name: e['name'].toString(),
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed('/detail-ruangan');
-                              },
-                            ),
-                          ).toList(),
+                          children: _dataRuangan
+                              .map(
+                                (e) => RoomCard(
+                                  name: e['nama'].toString(),
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed('/detail-ruangan');
+                                  },
+                                ),
+                              )
+                              .toList(),
                         ),
                       ),
                       onRefresh: () {

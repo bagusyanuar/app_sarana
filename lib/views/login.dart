@@ -1,3 +1,4 @@
+import 'package:app_sarana/controller/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -136,17 +137,17 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login(BuildContext context) async {
-    // Map<String, String> data = {"username": username, "password": password};
+    Map<String, String> data = {"username": username, "password": password};
     // SharedPreferences preferences = await SharedPreferences.getInstance();
     // preferences.setString("server", server);
     // print(data);
-    // setState(() {
-    //   isLoading = true;
-    // });
-    // await loginHandler(data, context);
-    // setState(() {
-    //   isLoading = false;
-    // });
+    setState(() {
+      isLoading = true;
+    });
+    await loginHandler(data, context);
+    setState(() {
+      isLoading = false;
+    });
     if (username == 'karyawan') {
       Navigator.popAndPushNamed(context, "/dashboard-karyawan");
     }

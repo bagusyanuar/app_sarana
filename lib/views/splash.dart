@@ -1,6 +1,7 @@
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -62,12 +63,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _initSplash() async {
     await Future.delayed(const Duration(seconds: 2));
-    // SharedPreferences preferences = await SharedPreferences.getInstance();
-    // String? token = preferences.getString("token");
-    Navigator.popAndPushNamed(context, "/login");
-    // if (token != null) {
-    // } else {
-    //   //
-    // }
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? token = preferences.getString("token");
+    if (token != null) {
+      Navigator.popAndPushNamed(context, "/dashboard-karyawan");
+    } else {
+      Navigator.popAndPushNamed(context, "/login");
+    }
   }
 }

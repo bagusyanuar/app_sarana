@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        "/": (context) => const DashboardMahasiswa(),
-        // "/": (context) => const SplashScreen(),
+        // "/": (context) => const DashboardMahasiswa(),
+        "/": (context) => const SplashScreen(),
         "/login": (context) => const LoginPage(),
         "/dashboard-karyawan": (context) => const DashboardKaryawan(),
         "/detail-ruangan": (context) => const DetailRuangan(),
