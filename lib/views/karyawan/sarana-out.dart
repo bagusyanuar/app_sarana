@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:app_sarana/controller/ruangan.dart';
 import 'package:app_sarana/dummy/data.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -16,17 +17,35 @@ class _SaranaOutState extends State<SaranaOut> {
   String currentDate = '-- pilih tanggal --';
   int? selectedRoom;
   int? selectedSaranaRoom;
-  final List<Map<String, dynamic>> _listRoom = DataDummy.DummyRoom;
-  final List<Map<String, dynamic>> _listSaranaRoom = DataDummy.DummySaranaRoom;
+  List<dynamic> _listRoom = [];
+  List<dynamic> _listSaranaRoom = DataDummy.DummySaranaRoom;
 
   @override
   void initState() {
     // TODO: implement initState
+    getListRuangan();
     super.initState();
     DateTime now = DateTime.now();
     setState(() {
       currentDate = DateFormat('yyyy-MM-dd').format(now);
     });
+  }
+
+  void getListRuangan() async {
+    setState(() {
+      // isLoading = true;
+    });
+    List<dynamic> list = await getListRuanganHandler("");
+    if (list.isNotEmpty) {
+      int currentRoomId = list.first["id"] as int;
+      setState(() {
+        // isLoading = false;
+        selectedRoom = currentRoomId;
+        _listRoom = list;
+      });
+    }
+
+    log(list.toString());
   }
 
   @override
@@ -125,10 +144,11 @@ class _SaranaOutState extends State<SaranaOut> {
                           items: _listRoom
                               .map((e) => DropdownMenuItem(
                                     value: e['id'] as int,
-                                    child: Text(e["name"]),
+                                    child: Text(e["nama"]),
                                   ))
                               .toList(),
                           onChanged: (int? value) {
+                            log(value.toString());
                             setState(() {
                               selectedRoom = value;
                             });

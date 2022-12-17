@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:app_sarana/components/base-card.dart';
@@ -18,6 +19,8 @@ class DashboardKaryawan extends StatefulWidget {
 }
 
 class _DashboardKaryawanState extends State<DashboardKaryawan> {
+  String param = '';
+  Timer? _debounce;
   bool isLoading = true;
   List<dynamic> _dataRuangan = [];
 
@@ -25,14 +28,21 @@ class _DashboardKaryawanState extends State<DashboardKaryawan> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getListRuangan();
+    getListRuangan(param);
   }
 
-  void getListRuangan() async {
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  void getListRuangan(String param) async {
     setState(() {
       isLoading = true;
     });
-    List<dynamic> list = await getListRuanganHandler();
+    List<dynamic> list = await getListRuanganHandler(param);
     setState(() {
       isLoading = false;
       _dataRuangan = list;
@@ -77,7 +87,9 @@ class _DashboardKaryawanState extends State<DashboardKaryawan> {
             Container(
               padding: const EdgeInsets.all(20),
               child: TextField(
-                onChanged: (text) {},
+                onChanged: (text) {
+                  _handlerOnChange(text);
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -104,8 +116,10 @@ class _DashboardKaryawanState extends State<DashboardKaryawan> {
                                 (e) => RoomCard(
                                   name: e['nama'].toString(),
                                   onTap: () {
-                                    Navigator.of(context)
-                                        .pushNamed('/detail-ruangan');
+                                    int id = e['id'] as int;
+                                    Navigator.of(context).pushNamed(
+                                        '/detail-ruangan',
+                                        arguments: id);
                                   },
                                 ),
                               )
@@ -151,5 +165,14 @@ class _DashboardKaryawanState extends State<DashboardKaryawan> {
     );
   }
 
-  _refresh() async {}
+  _refresh() async {
+    getListRuangan(param);
+  }
+
+  void _handlerOnChange(String text) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      getListRuangan(text);
+    });
+  }
 }
