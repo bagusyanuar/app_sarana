@@ -44,13 +44,13 @@ Future<Map<String, dynamic>?> getDetailRuanganHandler(int id) async {
   return result;
 }
 
-Future<List<dynamic>> getListStocksRuanganHandler(int id) async {
+Future<List<dynamic>> getListStocksRuanganHandler(int id, String param) async {
   List<dynamic> results = [];
   try {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? token = preferences.getString("token");
     final response = await Dio().get(
-      "$HostAddress/admin/ruangan/$id/sarana",
+      "$HostAddress/admin/ruangan/$id/sarana?name=$param",
       options: Options(headers: {
         "Accept": "application/json",
         "Authorization": "Bearer $token"
@@ -60,6 +60,25 @@ Future<List<dynamic>> getListStocksRuanganHandler(int id) async {
     log(results.toString());
   } on DioError catch (e) {
     log(e.toString());
+  }
+  return results;
+}
+
+Future<List<dynamic>> getStockByRoom(int id, String name) async {
+  List<dynamic> results = [];
+  try {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? token = preferences.getString("token");
+    final response = await Dio().get(
+      "$HostAddress/admin/stock/by-room?room_id=$id&name=$name",
+      options: Options(headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer $token"
+      }),
+    );
+    results = response.data["payload"] as List<dynamic>;
+  } on DioError catch (e) {
+    log(e.message);
   }
   return results;
 }

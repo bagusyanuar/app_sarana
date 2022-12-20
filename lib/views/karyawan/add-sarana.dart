@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:app_sarana/components/base-loader.dart';
@@ -18,6 +19,8 @@ class _AddSaranaState extends State<AddSarana> {
   bool isLoading = false;
   List<dynamic> _stocks = [];
   int ruanganId = 0;
+  String param = '';
+  Timer? _debounce;
   @override
   void initState() {
     // TODO: implement initState
@@ -28,7 +31,7 @@ class _AddSaranaState extends State<AddSarana> {
         ruanganId = id;
         isLoading = true;
       });
-      List<dynamic> data = await getListStocksRuanganHandler(id);
+      List<dynamic> data = await getListStocksRuanganHandler(id, param);
       setState(() {
         _stocks = data;
         isLoading = false;
@@ -38,12 +41,19 @@ class _AddSaranaState extends State<AddSarana> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _debounce?.cancel();
+    super.dispose();
+  }
+
   void addNewStock(int id) async {
     setState(() {
       isLoading = true;
     });
     await addStockRuanganHandler(ruanganId, id);
-    List<dynamic> data = await getListStocksRuanganHandler(ruanganId);
+    List<dynamic> data = await getListStocksRuanganHandler(ruanganId, param);
     setState(() {
       _stocks = data;
       isLoading = false;
@@ -63,7 +73,22 @@ class _AddSaranaState extends State<AddSarana> {
             Container(
               padding: const EdgeInsets.all(20),
               child: TextField(
-                onChanged: (text) {},
+                onChanged: (text) {
+                  if (_debounce?.isActive ?? false) _debounce?.cancel();
+                  _debounce =
+                      Timer(const Duration(milliseconds: 500), () async {
+                    setState(() {
+                      isLoading = true;
+                      param = text;
+                    });
+                    List<dynamic> data =
+                        await getListStocksRuanganHandler(ruanganId, param);
+                    setState(() {
+                      _stocks = data;
+                      isLoading = false;
+                    });
+                  });
+                },
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -262,7 +287,7 @@ class _AddSaranaState extends State<AddSarana> {
     setState(() {
       isLoading = true;
     });
-    List<dynamic> data = await getListStocksRuanganHandler(ruanganId);
+    List<dynamic> data = await getListStocksRuanganHandler(ruanganId, param);
     setState(() {
       _stocks = data;
       isLoading = false;

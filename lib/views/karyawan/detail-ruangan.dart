@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:app_sarana/controller/ruangan.dart';
@@ -17,8 +18,10 @@ class DetailRuangan extends StatefulWidget {
 class _DetailRuanganState extends State<DetailRuangan> {
   bool isLoading = true;
   String title = 'Nama Ruangan';
+  String param = '';
   List<dynamic> _stocks = [];
   int ruanganId = 0;
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -31,8 +34,8 @@ class _DetailRuanganState extends State<DetailRuangan> {
         isLoading = true;
       });
       Map<String, dynamic>? detail = await getDetailRuanganHandler(id);
+      List<dynamic> stocks = await getStockByRoom(id, param);
       if (detail != null) {
-        List<dynamic> stocks = detail["stocks"] as List<dynamic>;
         setState(() {
           title = detail["nama"] as String;
           _stocks = stocks;
@@ -41,6 +44,13 @@ class _DetailRuanganState extends State<DetailRuangan> {
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -63,7 +73,9 @@ class _DetailRuanganState extends State<DetailRuangan> {
                     padding: const EdgeInsets.only(
                         top: 20, bottom: 20, left: 20, right: 5),
                     child: TextField(
-                      onChanged: (text) {},
+                      onChanged: (text) {
+                        _getStockByRoom(text);
+                      },
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -112,6 +124,7 @@ class _DetailRuanganState extends State<DetailRuangan> {
                         return _refresh();
                       },
                       child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Column(
@@ -169,5 +182,29 @@ class _DetailRuanganState extends State<DetailRuangan> {
     );
   }
 
-  _refresh() async {}
+  void _getStockByRoom(String p) async {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      setState(() {
+        isLoading = true;
+        param = p;
+      });
+      List<dynamic> stocks = await getStockByRoom(ruanganId, param);
+      setState(() {
+        _stocks = stocks;
+        isLoading = false;
+      });
+    });
+  }
+
+  _refresh() async {
+    setState(() {
+      isLoading = true;
+    });
+    List<dynamic> stocks = await getStockByRoom(ruanganId, param);
+    setState(() {
+      _stocks = stocks;
+      isLoading = false;
+    });
+  }
 }
