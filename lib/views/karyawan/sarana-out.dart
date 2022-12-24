@@ -57,8 +57,23 @@ class _SaranaOutState extends State<SaranaOut> {
         _listSaranaRoom = listSarana;
       });
     }
-
     log(list.toString());
+  }
+
+  void _getStockByRoom() async {
+    setState(() {
+      _listSaranaRoom = [];
+    });
+    List<dynamic> listSarana = await getStockByRoom(selectedRoom!, '');
+    if (listSarana.isNotEmpty) {
+      int currentSaranaRoomId = listSarana.first["id"] as int;
+      setState(() {
+        selectedSaranaRoom = currentSaranaRoomId;
+      });
+    }
+    setState(() {
+      _listSaranaRoom = listSarana;
+    });
   }
 
   @override
@@ -181,6 +196,7 @@ class _SaranaOutState extends State<SaranaOut> {
                                           setState(() {
                                             selectedRoom = value;
                                           });
+                                          _getStockByRoom();
                                         },
                                       ),
                                     ),
@@ -332,14 +348,14 @@ class _SaranaOutState extends State<SaranaOut> {
   }
 
   void _saveTransaction(BuildContext ctx) async {
-    Map<String, dynamic> _data = {
+    Map<String, dynamic> data = {
       "tanggal": currentDate,
       "room_id": selectedRoom,
       "sarana_id": selectedSaranaRoom,
       "keterangan": keterangan,
       "qty": qty
     };
-    await saranaOutHandler(_data, ctx);
-    log(_data.toString());
+    await saranaOutHandler(data, ctx);
+    log(data.toString());
   }
 }

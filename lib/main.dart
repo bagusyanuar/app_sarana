@@ -1,5 +1,6 @@
 import 'package:app_sarana/views/karyawan/add-sarana.dart';
 import 'package:app_sarana/views/karyawan/dashboard.dart';
+import 'package:app_sarana/views/karyawan/detail-history.dart';
 import 'package:app_sarana/views/karyawan/detail-ruangan.dart';
 import 'package:app_sarana/views/karyawan/history.dart';
 import 'package:app_sarana/views/karyawan/sarana-in.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         "/sarana-in": (context) => const SaranaIn(),
         "/sarana-out": (context) => const SaranaOut(),
         "/sarana-riwayat": (context) => const HistorySarana(),
+        "/detail-sarana-riwayat": (context) => const DetailHistory(),
 
         //mahasiswa
         "/dashboard-mahasiswa": (context) => const DashboardMahasiswa(),
