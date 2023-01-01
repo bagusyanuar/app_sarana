@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:app_sarana/controller/keluhan.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,7 +14,10 @@ class DashboardMahasiswa extends StatefulWidget {
 
 class _DashboardMahasiswaState extends State<DashboardMahasiswa> {
   String fileString = 'pilih gambar / foto...';
+  File? file;
   final ImagePicker _picker = ImagePicker();
+  String deskripsi = "";
+  bool isLoadingSave = false;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +80,11 @@ class _DashboardMahasiswaState extends State<DashboardMahasiswa> {
                             child: const Text("Isi Keluhan"),
                           ),
                           TextField(
-                            onChanged: (text) {},
+                            onChanged: (text) {
+                              setState(() {
+                                deskripsi = text;
+                              });
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -132,32 +140,49 @@ class _DashboardMahasiswaState extends State<DashboardMahasiswa> {
                         ],
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      height: 60,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.send,
-                            color: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Kirim Keluhan",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                    GestureDetector(
+                      onTap: () {
+                        if (!isLoadingSave) {
+                          _saveKeluhan(context);
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        height: 60,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            isLoadingSave
+                                ? Container(
+                                    height: 20,
+                                    width: 20,
+                                    margin: const EdgeInsets.only(right: 5),
+                                    child: const CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.send,
+                                    color: Colors.white,
+                                  ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const Text(
+                              "Kirim Keluhan",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -196,11 +221,30 @@ class _DashboardMahasiswaState extends State<DashboardMahasiswa> {
         String fileName = imageFile.path.split('/').last;
         setState(() {
           fileString = fileName;
+          file = imageFile;
         });
         log(fileName);
       }
     } catch (e) {
       log(e.toString());
     }
+  }
+
+  void _saveKeluhan(BuildContext ctx) async {
+    Map<String, dynamic> data = {
+      "file": file,
+      "deskripsi": deskripsi,
+    };
+    setState(() {
+      isLoadingSave = true;
+    });
+    bool result = await keluhanSave(data, file, ctx);
+    log(result.toString());
+    if (result == true) {
+      Navigator.pushNamed(context, "/keluhan-riwayat");
+    }
+    setState(() {
+      isLoadingSave = false;
+    });
   }
 }
