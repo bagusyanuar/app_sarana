@@ -22,6 +22,7 @@ class _SaranaInState extends State<SaranaIn> {
   List<dynamic> _listRoom = [];
   List<dynamic> _listSaranaRoom = [];
   bool isLoading = true;
+  bool isLoadingSave = false;
   String keterangan = '';
   int qty = 0;
 
@@ -281,7 +282,9 @@ class _SaranaInState extends State<SaranaIn> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                _saveTransaction(context);
+                                if (!isLoadingSave) {
+                                  _saveTransaction(context);
+                                }
                               },
                               child: Container(
                                 margin: const EdgeInsets.only(top: 20),
@@ -294,15 +297,27 @@ class _SaranaInState extends State<SaranaIn> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.save,
-                                      color: Colors.white,
-                                    ),
-                                    SizedBox(
+                                  children: [
+                                    isLoadingSave
+                                        ? Container(
+                                            height: 20,
+                                            width: 20,
+                                            margin:
+                                                const EdgeInsets.only(right: 5),
+                                            child:
+                                                const CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : const Icon(
+                                            Icons.save,
+                                            color: Colors.white,
+                                          ),
+                                    const SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
+                                    const Text(
                                       "SIMPAN",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -355,7 +370,17 @@ class _SaranaInState extends State<SaranaIn> {
       "keterangan": keterangan,
       "qty": qty
     };
-    await saranaInHandler(data, ctx);
+    setState(() {
+      isLoadingSave = true;
+    });
+    bool result = await saranaInHandler(data, ctx);
+    log(result.toString());
+    if (result == true) {
+      Navigator.popAndPushNamed(context, "/sarana-riwayat");
+    }
+    setState(() {
+      isLoadingSave = false;
+    });
     log(data.toString());
   }
 }

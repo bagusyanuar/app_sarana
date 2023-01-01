@@ -67,6 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = preferences.getString("token");
     if (token != null) {
       Navigator.popAndPushNamed(context, "/dashboard-karyawan");
+      // Navigator.popAndPushNamed(context, "/dashboard-mahasiswa");
     } else {
       Navigator.popAndPushNamed(context, "/login");
     }

@@ -7,8 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helper/static_variable.dart';
 
-Future<void> saranaOutHandler(
+Future<bool> saranaOutHandler(
     Map<String, dynamic> data, BuildContext context) async {
+  bool result = false;
   try {
     var id = data["room_id"];
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -33,7 +34,7 @@ Future<void> saranaOutHandler(
       textColor: Colors.white,
       fontSize: 16.0,
     );
-
+    result = true;
     log(response.data.toString());
   } on DioError catch (e) {
     Fluttertoast.showToast(
@@ -47,10 +48,12 @@ Future<void> saranaOutHandler(
     );
     log(e.response!.data.toString());
   }
+  return result;
 }
 
-Future<void> saranaInHandler(
+Future<bool> saranaInHandler(
     Map<String, dynamic> data, BuildContext context) async {
+  bool result = false;
   try {
     var id = data["room_id"];
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -75,7 +78,7 @@ Future<void> saranaInHandler(
       textColor: Colors.white,
       fontSize: 16.0,
     );
-
+    result = true;
     log(response.data.toString());
   } on DioError catch (e) {
     Fluttertoast.showToast(
@@ -89,6 +92,7 @@ Future<void> saranaInHandler(
     );
     log(e.response!.data.toString());
   }
+  return result;
 }
 
 Future<List<dynamic>> reportSaranaInHandler(
@@ -108,15 +112,15 @@ Future<List<dynamic>> reportSaranaInHandler(
     );
     log(response.data["payload"].toString());
     result = response.data["payload"] as List<dynamic>;
-    Fluttertoast.showToast(
-      msg: "Success",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    // Fluttertoast.showToast(
+    //   msg: "Success",
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.CENTER,
+    //   timeInSecForIosWeb: 1,
+    //   backgroundColor: Colors.green,
+    //   textColor: Colors.white,
+    //   fontSize: 16.0,
+    // );
 
     log(response.data.toString());
   } on DioError catch (e) {
@@ -151,15 +155,15 @@ Future<List<dynamic>> reportSaranaOutHandler(
     );
     log(response.data["payload"].toString());
     result = response.data["payload"] as List<dynamic>;
-    Fluttertoast.showToast(
-      msg: "Success",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.CENTER,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
+    // Fluttertoast.showToast(
+    //   msg: "Success",
+    //   toastLength: Toast.LENGTH_SHORT,
+    //   gravity: ToastGravity.CENTER,
+    //   timeInSecForIosWeb: 1,
+    //   backgroundColor: Colors.green,
+    //   textColor: Colors.white,
+    //   fontSize: 16.0,
+    // );
 
     log(response.data.toString());
   } on DioError catch (e) {
@@ -173,6 +177,68 @@ Future<List<dynamic>> reportSaranaOutHandler(
       fontSize: 16.0,
     );
     log(e.response!.data.toString());
+  }
+  return result;
+}
+
+Future<Map<String, dynamic>?> reportSaranaInDetailHandler(int id) async {
+  Map<String, dynamic>? result;
+  try {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? token = preferences.getString("token");
+    final response = await Dio().get(
+      "$HostAddress/admin/ruangan/all/sarana/masuk/$id",
+      options: Options(
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $token"
+        },
+      ),
+    );
+    log(response.data["payload"].toString());
+    result = response.data["payload"] as Map<String, dynamic>?;
+    log(response.data.toString());
+  } on DioError catch (e) {
+    Fluttertoast.showToast(
+      msg: "Terjadi Kesalahan ${e.message}",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
+  return result;
+}
+
+Future<Map<String, dynamic>?> reportSaranaOutDetailHandler(int id) async {
+  Map<String, dynamic>? result;
+  try {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? token = preferences.getString("token");
+    final response = await Dio().get(
+      "$HostAddress/admin/ruangan/all/sarana/keluar/$id",
+      options: Options(
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $token"
+        },
+      ),
+    );
+    log(response.data["payload"].toString());
+    result = response.data["payload"] as Map<String, dynamic>?;
+    log(response.data.toString());
+  } on DioError catch (e) {
+    Fluttertoast.showToast(
+      msg: "Terjadi Kesalahan ${e.message}",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
   }
   return result;
 }
