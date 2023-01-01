@@ -18,8 +18,10 @@ Future<void> loginHandler(
       data: formData,
     );
     final String token = response.data["payload"]["access_token"] as String;
+    final String role = response.data["payload"]["role"] as String;
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString("token", token);
+    preferences.setString("role", role);
     Fluttertoast.showToast(
       msg: "Login Success",
       toastLength: Toast.LENGTH_SHORT,
@@ -31,8 +33,14 @@ Future<void> loginHandler(
     );
 
     // ignore: use_build_context_synchronously
-    Navigator.pushNamedAndRemoveUntil(
-        context, "/dashboard-karyawan", ModalRoute.withName("/dashboard"));
+    if (role == "admin") {
+      Navigator.pushNamedAndRemoveUntil(context, "/dashboard-karyawan",
+          ModalRoute.withName("/dashboard-karyawan"));
+    } else {
+      Navigator.pushNamedAndRemoveUntil(context, "/dashboard-mahasiswa",
+          ModalRoute.withName("/dashboard-mahasiswa"));
+    }
+
     log(response.data.toString());
   } on DioError catch (e) {
     Fluttertoast.showToast(

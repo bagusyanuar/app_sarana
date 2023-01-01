@@ -65,9 +65,15 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? token = preferences.getString("token");
-    if (token != null) {
-      Navigator.popAndPushNamed(context, "/dashboard-karyawan");
-      // Navigator.popAndPushNamed(context, "/dashboard-mahasiswa");
+    String? role = preferences.getString("role");
+    if (token != null && role != null) {
+      if (role == "admin") {
+        Navigator.pushNamedAndRemoveUntil(context, "/dashboard-karyawan",
+            ModalRoute.withName("/dashboard-karyawan"));
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, "/dashboard-mahasiswa",
+            ModalRoute.withName("/dashboard-mahasiswa"));
+      }
     } else {
       Navigator.popAndPushNamed(context, "/login");
     }
