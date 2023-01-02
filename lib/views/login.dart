@@ -73,23 +73,23 @@ class _LoginPageState extends State<LoginPage> {
                     hintText: "Password"),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              margin: const EdgeInsets.only(bottom: 15),
-              child: TextField(
-                onChanged: (text) {
-                  setState(() {
-                    server = text;
-                  });
-                },
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    prefixIcon: const Icon(Icons.settings),
-                    hintText: "Server"),
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   margin: const EdgeInsets.only(bottom: 15),
+            //   child: TextField(
+            //     onChanged: (text) {
+            //       setState(() {
+            //         server = text;
+            //       });
+            //     },
+            //     decoration: InputDecoration(
+            //         border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(10)),
+            //         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+            //         prefixIcon: const Icon(Icons.settings),
+            //         hintText: "Server"),
+            //   ),
+            // ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: GestureDetector(

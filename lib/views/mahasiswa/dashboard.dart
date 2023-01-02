@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:app_sarana/components/base-loader.dart';
 import 'package:app_sarana/controller/keluhan.dart';
+import 'package:app_sarana/controller/profil.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,7 +19,18 @@ class _DashboardMahasiswaState extends State<DashboardMahasiswa> {
   File? file;
   final ImagePicker _picker = ImagePicker();
   String deskripsi = "";
+  bool isLoading = false;
   bool isLoadingSave = false;
+  String username = "";
+  String kelas = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((_) async {});
+    super.initState();
+    getProfil();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,32 +40,6 @@ class _DashboardMahasiswaState extends State<DashboardMahasiswa> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        "Alex",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 16),
-                      ),
-                      Text("Sistem Informasi A")
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Icon(Icons.logout),
-                  )
-                ],
-              ),
-            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -192,19 +179,19 @@ class _DashboardMahasiswaState extends State<DashboardMahasiswa> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        onTap: ((value) {
-          if (value == 1) {
-            Navigator.of(context).pushNamed("/keluhan-riwayat");
-          }
-        }),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Beranda"),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: "Riwayat"),
-        ],
-        currentIndex: 0,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   type: BottomNavigationBarType.fixed,
+      //   onTap: ((value) {
+      //     if (value == 1) {
+      //       Navigator.of(context).pushNamed("/keluhan-riwayat");
+      //     }
+      //   }),
+      //   items: const [
+      //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Beranda"),
+      //     BottomNavigationBarItem(icon: Icon(Icons.history), label: "Riwayat"),
+      //   ],
+      //   currentIndex: 0,
+      // ),
     );
   }
 
@@ -241,10 +228,26 @@ class _DashboardMahasiswaState extends State<DashboardMahasiswa> {
     bool result = await keluhanSave(data, file, ctx);
     log(result.toString());
     if (result == true) {
-      Navigator.pushNamed(context, "/keluhan-riwayat");
+      Navigator.pop(context);
     }
     setState(() {
       isLoadingSave = false;
     });
+  }
+
+  void getProfil() async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, dynamic>? _data = await getProfilMahasiswaHandler();
+    log(_data.toString());
+    if (_data != null) {
+      setState(() {
+        username = _data["mahasiswa"]["nama"].toString();
+        kelas = _data["mahasiswa"]["kelas"]["nama"].toString();
+        isLoading = false;
+      });
+      log(username);
+    }
   }
 }

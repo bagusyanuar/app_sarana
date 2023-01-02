@@ -7,6 +7,7 @@ import 'package:app_sarana/views/karyawan/sarana-in.dart';
 import 'package:app_sarana/views/karyawan/sarana-out.dart';
 import 'package:app_sarana/views/login.dart';
 import 'package:app_sarana/views/mahasiswa/dashboard.dart';
+import 'package:app_sarana/views/mahasiswa/detail-keluhan.dart';
 import 'package:app_sarana/views/mahasiswa/history.dart';
 import 'package:flutter/material.dart';
 
@@ -50,8 +51,9 @@ class MyApp extends StatelessWidget {
         "/detail-sarana-riwayat": (context) => const DetailHistory(),
 
         //mahasiswa
-        "/dashboard-mahasiswa": (context) => const DashboardMahasiswa(),
-        "/keluhan-riwayat": (context) => const HistoryKeluhan(),
+        "/dashboard-mahasiswa": (context) => const HistoryKeluhan(),
+        "/tambah-keluhan": (context) => const DashboardMahasiswa(),
+        "/detail-keluhan": (context) => const DetailKeluhan(),
         // "/qr": (context) => const QRpage(),
         // "/riwayat": (context) => const Riwayat(),
         // "/search": (context) => SearchView(),
