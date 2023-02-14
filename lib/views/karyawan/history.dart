@@ -495,11 +495,11 @@ class _HistorySaranaState extends State<HistorySarana>
           }
 
           if (value == 1) {
-            Navigator.of(context).popAndPushNamed("/sarana-in");
+            Navigator.of(context).popAndPushNamed("/sarana-out");
           }
 
           if (value == 2) {
-            Navigator.of(context).popAndPushNamed("/sarana-out");
+            Navigator.of(context).popAndPushNamed("/sarana-in");
           }
         }),
         items: const [

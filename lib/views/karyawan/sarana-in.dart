@@ -23,6 +23,7 @@ class _SaranaInState extends State<SaranaIn> {
   List<dynamic> _listSaranaRoom = [];
   bool isLoading = true;
   bool isLoadingSave = false;
+  bool onLoadingListSarana = false;
   String keterangan = '';
   int qty = 0;
 
@@ -46,7 +47,7 @@ class _SaranaInState extends State<SaranaIn> {
       int currentRoomId = list.first["id"] as int;
       List<dynamic> listSarana = await getStockByRoom(currentRoomId, '');
       if (listSarana.isNotEmpty) {
-        int currentSaranaRoomId = listSarana.first["id"] as int;
+        int currentSaranaRoomId = listSarana.first["sarana_id"] as int;
         setState(() {
           selectedSaranaRoom = currentSaranaRoomId;
         });
@@ -64,16 +65,21 @@ class _SaranaInState extends State<SaranaIn> {
   void _getStockByRoom() async {
     setState(() {
       _listSaranaRoom = [];
+      onLoadingListSarana = true;
     });
+    log(selectedRoom.toString());
     List<dynamic> listSarana = await getStockByRoom(selectedRoom!, '');
+    log(listSarana.toString());
     if (listSarana.isNotEmpty) {
-      int currentSaranaRoomId = listSarana.first["id"] as int;
+      int currentSaranaRoomId = listSarana.first["sarana_id"] as int;
+      log(currentSaranaRoomId.toString());
       setState(() {
         selectedSaranaRoom = currentSaranaRoomId;
+        _listSaranaRoom = listSarana;
       });
     }
     setState(() {
-      _listSaranaRoom = listSarana;
+      onLoadingListSarana = false;
     });
   }
 
@@ -215,23 +221,26 @@ class _SaranaInState extends State<SaranaIn> {
                                             color: Colors.grey, width: 1),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: DropdownButton<int>(
-                                        underline: Container(),
-                                        isExpanded: true,
-                                        value: selectedSaranaRoom,
-                                        items: _listSaranaRoom
-                                            .map((e) => DropdownMenuItem(
-                                                  value: e['sarana_id'] as int,
-                                                  child:
-                                                      Text(e["sarana"]['name']),
-                                                ))
-                                            .toList(),
-                                        onChanged: (int? value) {
-                                          setState(() {
-                                            selectedSaranaRoom = value;
-                                          });
-                                        },
-                                      ),
+                                      child: onLoadingListSarana
+                                          ? Container()
+                                          : DropdownButton<int>(
+                                              underline: Container(),
+                                              isExpanded: true,
+                                              value: selectedSaranaRoom,
+                                              items: _listSaranaRoom
+                                                  .map((e) => DropdownMenuItem(
+                                                        value: e['sarana_id']
+                                                            as int,
+                                                        child: Text(e["sarana"]
+                                                            ['name']),
+                                                      ))
+                                                  .toList(),
+                                              onChanged: (int? value) {
+                                                setState(() {
+                                                  selectedSaranaRoom = value;
+                                                });
+                                              },
+                                            ),
                                     ),
                                     Container(
                                       margin: const EdgeInsets.only(bottom: 5),

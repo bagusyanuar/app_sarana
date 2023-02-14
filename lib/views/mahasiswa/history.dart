@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:app_sarana/controller/keluhan.dart';
 import 'package:app_sarana/dummy/data.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/base-loader.dart';
 import '../../controller/profil.dart';
@@ -90,7 +91,14 @@ class _HistoryKeluhanState extends State<HistoryKeluhan> {
                           ],
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () async {
+                            SharedPreferences preferences =
+                                await SharedPreferences.getInstance();
+                            preferences.remove("token");
+                            preferences.remove("role");
+                            Navigator.pushNamedAndRemoveUntil(context, "/login",
+                                ModalRoute.withName("/login"));
+                          },
                           child: const Icon(Icons.logout),
                         )
                       ],

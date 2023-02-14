@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:app_sarana/controller/keluhan.dart';
+import 'package:app_sarana/helper/static_variable.dart';
 import 'package:flutter/material.dart';
 
 import '../../components/base-loader.dart';
@@ -109,7 +110,7 @@ class _DetailKeluhanState extends State<DetailKeluhan> {
                           margin: const EdgeInsets.only(top: 5, bottom: 10),
                           child: data!["file"] != null
                               ? Image.network(
-                                  "http://192.168.100.120:8000/${data!["file"]}",
+                                  "$HostImage${data!["file"]}",
                                   fit: BoxFit.fill,
                                 )
                               : Container(),

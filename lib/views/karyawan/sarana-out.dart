@@ -46,7 +46,7 @@ class _SaranaOutState extends State<SaranaOut> {
       int currentRoomId = list.first["id"] as int;
       List<dynamic> listSarana = await getStockByRoom(currentRoomId, '');
       if (listSarana.isNotEmpty) {
-        int currentSaranaRoomId = listSarana.first["id"] as int;
+        int currentSaranaRoomId = listSarana.first["sarana_id"] as int;
         setState(() {
           selectedSaranaRoom = currentSaranaRoomId;
         });
@@ -67,7 +67,7 @@ class _SaranaOutState extends State<SaranaOut> {
     });
     List<dynamic> listSarana = await getStockByRoom(selectedRoom!, '');
     if (listSarana.isNotEmpty) {
-      int currentSaranaRoomId = listSarana.first["id"] as int;
+      int currentSaranaRoomId = listSarana.first["sarana_id"] as int;
       setState(() {
         selectedSaranaRoom = currentSaranaRoomId;
       });
