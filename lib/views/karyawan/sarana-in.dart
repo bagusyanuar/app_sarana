@@ -341,32 +341,32 @@ class _SaranaInState extends State<SaranaIn> {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: ((value) {
-            if (value == 0) {
-              Navigator.of(context).pop();
-            }
+        // bottomNavigationBar: BottomNavigationBar(
+        //   type: BottomNavigationBarType.fixed,
+        //   onTap: ((value) {
+        //     if (value == 0) {
+        //       Navigator.of(context).pop();
+        //     }
 
-            if (value == 1) {
-              Navigator.of(context).popAndPushNamed("/sarana-out");
-            }
+        //     if (value == 1) {
+        //       Navigator.of(context).popAndPushNamed("/sarana-out");
+        //     }
 
-            if (value == 3) {
-              Navigator.of(context).popAndPushNamed("/sarana-riwayat");
-            }
-          }),
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.outbox_rounded), label: "Sarana Keluar"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.move_to_inbox), label: "Sarana Masuk"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.history), label: "Riwayat"),
-          ],
-          currentIndex: 2,
-        ),
+        //     if (value == 3) {
+        //       Navigator.of(context).popAndPushNamed("/sarana-riwayat");
+        //     }
+        //   }),
+        //   items: const [
+        //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.outbox_rounded), label: "Sarana Keluar"),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.move_to_inbox), label: "Sarana Masuk"),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.history), label: "Riwayat"),
+        //   ],
+        //   currentIndex: 2,
+        // ),
       ),
     );
   }

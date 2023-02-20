@@ -3,6 +3,7 @@ import 'package:app_sarana/views/karyawan/dashboard.dart';
 import 'package:app_sarana/views/karyawan/detail-history.dart';
 import 'package:app_sarana/views/karyawan/detail-ruangan.dart';
 import 'package:app_sarana/views/karyawan/history.dart';
+import 'package:app_sarana/views/karyawan/inventaris.dart';
 import 'package:app_sarana/views/karyawan/sarana-in.dart';
 import 'package:app_sarana/views/karyawan/sarana-out.dart';
 import 'package:app_sarana/views/login.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         "/": (context) => const SplashScreen(),
         "/login": (context) => const LoginPage(),
         "/dashboard-karyawan": (context) => const DashboardKaryawan(),
+        "/inventaris": (context) => const Inventaris(),
         "/detail-ruangan": (context) => const DetailRuangan(),
         "/add-sarana": (context) => const AddSarana(),
         "/sarana-in": (context) => const SaranaIn(),

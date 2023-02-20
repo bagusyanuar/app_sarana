@@ -19,6 +19,7 @@ class _SaranaOutState extends State<SaranaOut> {
   String currentDate = '-- pilih tanggal --';
   int? selectedRoom;
   int? selectedSaranaRoom;
+  int? kondisi;
   List<dynamic> _listRoom = [];
   List<dynamic> _listSaranaRoom = [];
   bool isLoading = true;
@@ -34,6 +35,7 @@ class _SaranaOutState extends State<SaranaOut> {
     DateTime now = DateTime.now();
     setState(() {
       currentDate = DateFormat('yyyy-MM-dd').format(now);
+      kondisi = 0;
     });
   }
 
@@ -256,6 +258,49 @@ class _SaranaOutState extends State<SaranaOut> {
                                     ),
                                     Container(
                                       margin: const EdgeInsets.only(bottom: 5),
+                                      child: const Text("Kondisi"),
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      margin: const EdgeInsets.only(bottom: 5),
+                                      padding: const EdgeInsets.only(
+                                          left: 10, right: 5),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.grey, width: 1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: DropdownButton<int>(
+                                        underline: Container(),
+                                        isExpanded: true,
+                                        value: kondisi,
+                                        items: const [
+                                          DropdownMenuItem(
+                                            value: 0,
+                                            child: Text("Rusak Ringan"),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: 1,
+                                            child: Text("Rusak Berat"),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: 2,
+                                            child: Text("Di Pinjam"),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: 3,
+                                            child: Text("Barang Hilang"),
+                                          ),
+                                        ],
+                                        onChanged: (int? value) {
+                                          setState(() {
+                                            kondisi = value;
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 5),
                                       child:
                                           const Text("Keterangan / Keperluan"),
                                     ),
@@ -332,32 +377,32 @@ class _SaranaOutState extends State<SaranaOut> {
             ],
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          onTap: ((value) {
-            if (value == 0) {
-              Navigator.of(context).pop();
-            }
+        // bottomNavigationBar: BottomNavigationBar(
+        //   type: BottomNavigationBarType.fixed,
+        //   onTap: ((value) {
+        //     if (value == 0) {
+        //       Navigator.of(context).pop();
+        //     }
 
-            if (value == 2) {
-              Navigator.of(context).popAndPushNamed("/sarana-in");
-            }
+        //     if (value == 2) {
+        //       Navigator.of(context).popAndPushNamed("/sarana-in");
+        //     }
 
-            if (value == 3) {
-              Navigator.of(context).popAndPushNamed("/sarana-riwayat");
-            }
-          }),
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.outbox_rounded), label: "Sarana Keluar"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.move_to_inbox), label: "Sarana Masuk"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.history), label: "Riwayat"),
-          ],
-          currentIndex: 1,
-        ),
+        //     if (value == 3) {
+        //       Navigator.of(context).popAndPushNamed("/sarana-riwayat");
+        //     }
+        //   }),
+        //   items: const [
+        //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.outbox_rounded), label: "Sarana Keluar"),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.move_to_inbox), label: "Sarana Masuk"),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.history), label: "Riwayat"),
+        //   ],
+        //   currentIndex: 1,
+        // ),
       ),
     );
   }
@@ -368,7 +413,8 @@ class _SaranaOutState extends State<SaranaOut> {
       "room_id": selectedRoom,
       "sarana_id": selectedSaranaRoom,
       "keterangan": keterangan,
-      "qty": qty
+      "qty": qty,
+      "kondisi": kondisi
     };
     setState(() {
       isLoadingSave = true;
