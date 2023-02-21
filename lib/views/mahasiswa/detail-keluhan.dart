@@ -75,75 +75,104 @@ class _DetailKeluhanState extends State<DetailKeluhan> {
             Expanded(
               child: isLoading
                   ? const BaseLoader()
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          child: const Text("Isi Keluhan"),
-                        ),
-                        Container(
-                          height: 120,
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          margin: const EdgeInsets.only(top: 5, bottom: 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(10),
+                  : SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: const Text("Isi Keluhan"),
                           ),
-                          child: Text(
-                            data!["deskripsi"].toString(),
-                            style: const TextStyle(
-                              color: Colors.grey,
+                          Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            margin: const EdgeInsets.only(top: 5, bottom: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Text(
+                              data!["deskripsi"].toString(),
+                              style: const TextStyle(
+                                color: Colors.grey,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          child: const Text("Gambar"),
-                        ),
-                        Container(
-                          height: 200,
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.only(top: 5, bottom: 10),
-                          child: data!["file"] != null
-                              ? Image.network(
-                                  "$HostImage${data!["file"]}",
-                                  fit: BoxFit.fill,
-                                )
-                              : Container(),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 5),
-                          child: const Text("Status"),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(top: 5, bottom: 10),
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          height: 50,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(10),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: const Text("Gambar"),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  status,
-                                  style: const TextStyle(
-                                    color: Colors.grey,
+                          Container(
+                            height: 200,
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(top: 5, bottom: 10),
+                            child: data!["file"] != null
+                                ? Image.network(
+                                    "$HostImage${data!["file"]}",
+                                    fit: BoxFit.fill,
+                                  )
+                                : Container(),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: const Text("Status"),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 5, bottom: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey, width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    status,
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                          data!["status"] == 6
+                              ? Container(
+                                  margin: const EdgeInsets.only(bottom: 5),
+                                  child: const Text("Alasan Penolakan"),
+                                )
+                              : Container(),
+                          data!["status"] == 6
+                              ? Container(
+                                  height: 120,
+                                  width: MediaQuery.of(context).size.width,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  margin:
+                                      const EdgeInsets.only(top: 5, bottom: 10),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.grey, width: 1),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    data!["keterangan"].toString(),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                        ],
+                      ),
                     ),
             )
           ],

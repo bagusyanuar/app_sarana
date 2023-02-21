@@ -223,6 +223,20 @@ class _HistoryKeluhanState extends State<HistoryKeluhan> {
         backgroundColor: Colors.blue,
         child: const Icon(Icons.add),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        onTap: ((value) {
+          if (value == 1) {
+            Navigator.of(context).pushNamed("/ruangan");
+          }
+        }),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.storage), label: "Inventaris"),
+        ],
+        currentIndex: 0,
+      ),
     );
   }
 }

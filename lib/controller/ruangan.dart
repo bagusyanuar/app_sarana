@@ -102,3 +102,62 @@ Future<void> addStockRuanganHandler(int ruanganId, int id) async {
     log(e.toString());
   }
 }
+
+Future<List<dynamic>> getListRuanganMahasiswaHandler(String param) async {
+  List<dynamic> results = [];
+  try {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? token = preferences.getString("token");
+    final response = await Dio().get(
+      "$HostAddress/mahasiswa/ruangan?q=$param",
+      options: Options(headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer $token"
+      }),
+    );
+    results = response.data["payload"] as List<dynamic>;
+    log(results.toString());
+  } on DioError catch (e) {
+    log(e.toString());
+  }
+  return results;
+}
+
+Future<Map<String, dynamic>?> getDetailRuanganMahasiswaHandler(int id) async {
+  Map<String, dynamic>? result;
+  try {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? token = preferences.getString("token");
+    final response = await Dio().get(
+      "$HostAddress/mahasiswa/ruangan/$id",
+      options: Options(headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer $token"
+      }),
+    );
+    result = response.data["payload"] as Map<String, dynamic>;
+    log(response.data.toString());
+  } on DioError catch (e) {
+    log(e.toString());
+  }
+  return result;
+}
+
+Future<List<dynamic>> getStockByRoomMahasiswa(int id, String name) async {
+  List<dynamic> results = [];
+  try {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? token = preferences.getString("token");
+    final response = await Dio().get(
+      "$HostAddress/mahasiswa/stock/by-room?room_id=$id&name=$name",
+      options: Options(headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer $token"
+      }),
+    );
+    results = response.data["payload"] as List<dynamic>;
+  } on DioError catch (e) {
+    log(e.message);
+  }
+  return results;
+}

@@ -495,22 +495,16 @@ class _HistorySaranaState extends State<HistorySarana>
           }
 
           if (value == 1) {
-            Navigator.of(context).popAndPushNamed("/sarana-out");
-          }
-
-          if (value == 2) {
-            Navigator.of(context).popAndPushNamed("/sarana-in");
+            Navigator.of(context).popAndPushNamed("/inventaris");
           }
         }),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.outbox_rounded), label: "Sarana Keluar"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.move_to_inbox), label: "Sarana Masuk"),
+              icon: Icon(Icons.storage), label: "Inventaris"),
           BottomNavigationBarItem(icon: Icon(Icons.history), label: "Riwayat"),
         ],
-        currentIndex: 3,
+        currentIndex: 2,
       ),
     );
   }
